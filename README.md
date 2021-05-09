@@ -48,9 +48,10 @@
 | address            | string              | null: false             |
 | building           | string              |                         |
 | phone_number       | string              | null: false             |
-| item               | references          | foreign_key: true       |
+| purchase_record    | references          | foreign_key: true       |
 
 ### Association
+* belongs_to :purchase_record
 
 
 ## purchase_records table
@@ -64,3 +65,4 @@
 
 * belongs_to :user
 * belongs_to :item
+* has_one :delivery

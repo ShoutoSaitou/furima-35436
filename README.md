@@ -37,7 +37,6 @@
 
 * belongs_to :user
 * has_one :purchase_record
-* has_one :delivery
 
 ## deliveries table
 
@@ -52,7 +51,7 @@
 | item               | references          | foreign_key: true       |
 
 ### Association
-* belongs_to :item
+
 
 ## purchase_records table
 

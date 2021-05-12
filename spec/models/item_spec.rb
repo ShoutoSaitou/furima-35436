@@ -76,13 +76,11 @@ RSpec.describe Item, type: :model do
       it 'priceが全角数字だと登録できない' do
         @item.price = '５００'
         @item.valid?
-        binding.pry
         expect(@item.errors.full_messages).to include "Price is not included in the list"
       end      
       it 'priceが半角英字だと登録できない' do
         @item.price = 'aaa'
         @item.valid?
-        binding.pry
         expect(@item.errors.full_messages).to include "Price is not included in the list"
       end
 

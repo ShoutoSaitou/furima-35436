@@ -20,6 +20,13 @@ class Item < ApplicationRecord
     validates :image
   end
   validates_inclusion_of :price, in:300..9999999
-  validates :price, format: {with: /^[0-9]+$/ }
+  validates :price, format: {with: /\A[0-9]+\z/ }
+
+
+  validates :category_id, numericality: { other_than: 1 } 
+  validates :condition_id, numericality: { other_than: 1 } 
+  validates :shipping_charge_id, numericality: { other_than: 1 } 
+  validates :delivery_area_id, numericality: { other_than: 1 } 
+  validates :days_to_ship_id, numericality: { other_than: 1 } 
 
 end

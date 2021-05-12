@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
   def index
   end
   def new
+    @item = Item.new
   end
   def create
     @item = Item.new(item_params)
@@ -23,10 +24,9 @@ class ItemsController < ApplicationController
       :description,
       :category_id,
       :condition_id,
-      :shipping_charges_id,
+      :shipping_charge_id,
       :delivery_area_id,
       :days_to_ship_id,
-      :price,
-      :user).merge(user_id: current_user.id)
+      :price).merge(user_id: current_user.id)
   end
 end

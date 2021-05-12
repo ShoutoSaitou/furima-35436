@@ -17,7 +17,6 @@ class Item < ApplicationRecord
     validates :delivery_area_id
     validates :days_to_ship_id
     validates :price
-    validates :user
     validates :image
   end
   validates_inclusion_of :price, in:300..9999999

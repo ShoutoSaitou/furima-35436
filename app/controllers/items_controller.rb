@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
-  before_action :set_item , only:[:show, :edit, :update]
-  before_action :authenticate_user!, only: [:new, :create,:edit,:update]
-  before_action :exhibitor_confirmation, only: [:edit,:update]
+  before_action :set_item, only: [:show, :edit, :update]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
+  before_action :exhibitor_confirmation, only: [:edit, :update]
 
   def index
     @items = Item.all
@@ -22,7 +22,7 @@ class ItemsController < ApplicationController
 
   def show
   end
-  
+
   def edit
   end
 

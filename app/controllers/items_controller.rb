@@ -1,13 +1,11 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [:index, :show]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :exhibitor_confirmation, only: [:edit, :update, :destroy]
 
   def index
-    @items = Item.order("created_at DESC")
-    @order = Order.all
-
-
+    @items = Item.order('created_at DESC')
   end
 
   def new
@@ -63,6 +61,10 @@ class ItemsController < ApplicationController
 
   def set_item
     @item = Item.find(params[:id])
+  end
+
+  def set_order
+    @order = Order.all
   end
 
   def exhibitor_confirmation

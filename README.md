@@ -16,7 +16,7 @@
 ### Association
 
 * has_many :items
-* has_many :purchase_records
+* has_many :orders
 
 ## items table
 
@@ -36,7 +36,7 @@
 ### Association
 
 * belongs_to :user
-* has_one :purchase_record
+* has_one :order
 
 ## deliveries table
 
@@ -48,13 +48,13 @@
 | address            | string              | null: false             |
 | building           | string              |                         |
 | phone_number       | string              | null: false             |
-| purchase_record    | references          | foreign_key: true       |
+| order              | references          | foreign_key: true       |
 
 ### Association
-* belongs_to :purchase_record
+* belongs_to :order
 
 
-## purchase_records table
+## orders table
 
 | Column             | Type                | Options                 |
 |--------------------|---------------------|-------------------------|

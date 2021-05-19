@@ -7,8 +7,10 @@ before_action :sold_confirmation,only:[:index,:create]
   end
 
   def create
+    # binding.pry
     @order_delivery = OrderDelivery.new(order_params)
     if @order_delivery.valid?
+      pay_item
       @order_delivery.save
       redirect_to root_path
     else
@@ -20,12 +22,21 @@ before_action :sold_confirmation,only:[:index,:create]
 
   def order_params
     params.require(:order_delivery).permit(:postal_code, :delivery_area_id, :municipality, :address, :building, :phone_number).merge(
-      user_id: current_user.id, item_id: @item.id
+      user_id: current_user.id, item_id: @item.id, token: params[:token]
     )
   end
 
   def set_item
     @item = Item.find(params[:item_id])
+  end
+
+  def pay_item
+    Payjp.api_key = "sk_test_e77d20010890d8a4e6f953d7"  
+    Payjp::Charge.create(
+      amount: @item.price,
+      card: order_params[:token], 
+      currency: 'jpy'                
+    )
   end
 
 

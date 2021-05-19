@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
-before_action :set_item,only:[:index,:create]
-before_action :sold_confirmation,only:[:index,:create]
-before_action :authenticate_user!, only: [:index,:create]
+  before_action :set_item, only: [:index, :create]
+  before_action :sold_confirmation, only: [:index, :create]
+  before_action :authenticate_user!, only: [:index, :create]
 
   def index
     @order_delivery = OrderDelivery.new
@@ -32,19 +32,16 @@ before_action :authenticate_user!, only: [:index,:create]
   end
 
   def pay_item
-    Payjp.api_key = "sk_test_e77d20010890d8a4e6f953d7"  
+    Payjp.api_key = 'sk_test_e77d20010890d8a4e6f953d7'
     Payjp::Charge.create(
       amount: @item.price,
-      card: order_params[:token], 
-      currency: 'jpy'                
+      card: order_params[:token],
+      currency: 'jpy'
     )
   end
 
-
   def sold_confirmation
-    @order= Order.all
-    if @order.find_by(item_id: @item.id)
-      redirect_to root_path
-    end
+    @order = Order.all
+    redirect_to root_path if @order.find_by(item_id: @item.id)
   end
 end

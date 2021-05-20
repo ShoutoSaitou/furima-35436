@@ -11,16 +11,22 @@ RSpec.describe OrderDelivery, type: :model do
   end
 
   context '内容に問題がない場合' do
-    it '建物以外のカラムが全て存在する時、保存できる←後で正式に記述' do
+    it 'postal_codeとdelivery_area_idとmunicipalityとaddressとphone_numberが存在していれば保存できる' do
+      @order_delivery.building= ''
       expect(@order_delivery).to be_valid
     end
+
+    it '全ての情報が正しければ保存できる' do
+      expect(@order_delivery).to be_valid
+    end
+
     it 'postal_codeがハイフン込みの数字なら保存できる' do
       expect(@order_delivery).to be_valid
     end
     it 'phone_numberが半角の数値かつ11桁以内なら保存できる' do
       expect(@order_delivery).to be_valid
     end
-    it 'delivery_area_idが2〜47なら登録できる' do
+    it 'delivery_area_idが2〜47なら保存できる' do
       expect(@order_delivery).to be_valid
     end
   end
@@ -65,6 +71,31 @@ RSpec.describe OrderDelivery, type: :model do
       @order_delivery.phone_number = '0123456789012'
       @order_delivery.valid?
       expect(@order_delivery.errors.full_messages).to include('Phone number is invalid')
+    end
+    it 'phone_numberが半角数字のみでないと保存できない' do
+      @order_delivery.phone_number = '090-1234-5678'
+      @order_delivery.valid?
+      expect(@order_delivery.errors.full_messages).to include('Phone number is invalid')
+    end
+    it 'phone_numberが全角数字だと保存できないこと' do
+      @order_delivery.phone_number = '０９０１２３４５６７８'
+      @order_delivery.valid?
+      expect(@order_delivery.errors.full_messages).to include('Phone number is invalid')
+    end
+    it 'delivery_area_idが1の選択肢を選択すると購入できない' do
+      @order_delivery.delivery_area_id = 1
+      @order_delivery.valid?
+      expect(@order_delivery.errors.full_messages).to include("Delivery area must be other than 1")
+    end
+    it 'user_idが空では購入できない' do
+      @order_delivery.user_id = ''
+      @order_delivery.valid?
+      expect(@order_delivery.errors.full_messages).to include("User can't be blank")
+    end
+    it 'item_idが空では購入できない' do
+      @order_delivery.item_id = ''
+      @order_delivery.valid?
+      expect(@order_delivery.errors.full_messages).to include("Item can't be blank")
     end
   end
 end

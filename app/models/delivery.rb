@@ -3,4 +3,5 @@ class Delivery < ApplicationRecord
   belongs_to :delivery_area
 
   belongs_to :order
+
 end

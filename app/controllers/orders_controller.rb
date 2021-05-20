@@ -2,6 +2,7 @@ class OrdersController < ApplicationController
   before_action :set_item, only: [:index, :create]
   before_action :sold_confirmation, only: [:index, :create, :update]
   before_action :authenticate_user!, only: [:index, :create]
+  before_action :exhibitor_confirmation, only: [:index, :create, :update]
 
   def index
     @order_delivery = OrderDelivery.new
@@ -37,6 +38,10 @@ class OrdersController < ApplicationController
       card: order_params[:token],
       currency: 'jpy'
     )
+  end
+
+  def exhibitor_confirmation
+    redirect_to root_path if current_user == @item.user
   end
 
   def sold_confirmation

@@ -20,15 +20,6 @@ RSpec.describe OrderDelivery, type: :model do
       expect(@order_delivery).to be_valid
     end
 
-    it 'postal_codeがハイフン込みの数字なら保存できる' do
-      expect(@order_delivery).to be_valid
-    end
-    it 'phone_numberが半角の数値かつ11桁以内なら保存できる' do
-      expect(@order_delivery).to be_valid
-    end
-    it 'delivery_area_idが2〜47なら保存できる' do
-      expect(@order_delivery).to be_valid
-    end
   end
 
   context '内容に問題がある場合' do
@@ -68,7 +59,7 @@ RSpec.describe OrderDelivery, type: :model do
       expect(@order_delivery.errors.full_messages).to include('Postal code is invalid')
     end
     it 'phone_numberが11桁以内でない場合は保存ができない' do
-      @order_delivery.phone_number = '0123456789012'
+      @order_delivery.phone_number = '123456789012'
       @order_delivery.valid?
       expect(@order_delivery.errors.full_messages).to include('Phone number is invalid')
     end
@@ -82,6 +73,12 @@ RSpec.describe OrderDelivery, type: :model do
       @order_delivery.valid?
       expect(@order_delivery.errors.full_messages).to include('Phone number is invalid')
     end
+    it 'phone_numberが英数混合だと保存できないこと' do
+      @order_delivery.phone_number = 'abc12345678'
+      @order_delivery.valid?
+      expect(@order_delivery.errors.full_messages).to include('Phone number is invalid')
+    end
+
     it 'delivery_area_idが1の選択肢を選択すると購入できない' do
       @order_delivery.delivery_area_id = 1
       @order_delivery.valid?

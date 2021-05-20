@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :set_order, only: [:index, :show]
-  before_action :sold_confirmation, only: [:edit, :destroy]
+  before_action :sold_confirmation, only: [:edit, :destroy,:update]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :exhibitor_confirmation, only: [:edit, :update, :destroy]
 
@@ -73,7 +73,7 @@ class ItemsController < ApplicationController
   end
 
   def sold_confirmation
-    @order = Order.all
+    set_order
     redirect_to root_path if @order.find_by(item_id: @item.id)
   end
 end

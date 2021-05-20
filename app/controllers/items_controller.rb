@@ -1,10 +1,11 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [:index, :show]
+  before_action :sold_confirmation, only: [:edit, :destroy,:update]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  before_action :exhibitor_confirmation, only: [:edit, :update, :destroy]
 
   def index
-    @items = Item.order("created_at DESC")
+    @items = Item.order('created_at DESC')
   end
 
   def new
@@ -62,7 +63,11 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  def exhibitor_confirmation
-    redirect_to root_path unless current_user == @item.user
+  def set_order
+    @order = Order.all
+  end
+
+  def sold_confirmation
+    redirect_to root_path if @order.find_by(item_id: @item.id) || current_user != @item.user
   end
 end

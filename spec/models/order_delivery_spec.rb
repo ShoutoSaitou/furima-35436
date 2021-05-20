@@ -12,7 +12,7 @@ RSpec.describe OrderDelivery, type: :model do
 
   context '内容に問題がない場合' do
     it 'postal_codeとdelivery_area_idとmunicipalityとaddressとphone_numberが存在していれば保存できる' do
-      @order_delivery.building= ''
+      @order_delivery.building = ''
       expect(@order_delivery).to be_valid
     end
 
@@ -85,7 +85,7 @@ RSpec.describe OrderDelivery, type: :model do
     it 'delivery_area_idが1の選択肢を選択すると購入できない' do
       @order_delivery.delivery_area_id = 1
       @order_delivery.valid?
-      expect(@order_delivery.errors.full_messages).to include("Delivery area must be other than 1")
+      expect(@order_delivery.errors.full_messages).to include('Delivery area must be other than 1')
     end
     it 'user_idが空では購入できない' do
       @order_delivery.user_id = ''

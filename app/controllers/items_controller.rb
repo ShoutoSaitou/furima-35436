@@ -68,6 +68,7 @@ class ItemsController < ApplicationController
   end
 
   def sold_confirmation
+    set_order
     redirect_to root_path if @order.find_by(item_id: @item.id) || current_user != @item.user
   end
 end

@@ -40,8 +40,6 @@ class OrdersController < ApplicationController
     )
   end
 
-
-
   def sold_confirmation
     @order = Order.all
     redirect_to root_path if @order.find_by(item_id: @item.id) || current_user == @item.user

@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_item, only: [:index, :create]
-  before_action :sold_confirmation, only: [:index, :create]
+  before_action :sold_confirmation, only: [:index, :create, :update]
   before_action :authenticate_user!, only: [:index, :create]
 
   def index
@@ -8,7 +8,6 @@ class OrdersController < ApplicationController
   end
 
   def create
-    # binding.pry
     @order_delivery = OrderDelivery.new(order_params)
     if @order_delivery.valid?
       pay_item

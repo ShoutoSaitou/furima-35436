@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   before_action :set_item, only: [:index, :create]
   before_action :sold_confirmation, only: [:index, :create]
   before_action :authenticate_user!, only: [:index, :create]
-  before_action :exhibitor_confirmation, only: [:index, :create]
+
 
   def index
     @order_delivery = OrderDelivery.new
@@ -40,12 +40,10 @@ class OrdersController < ApplicationController
     )
   end
 
-  def exhibitor_confirmation
-    redirect_to root_path if current_user == @item.user
-  end
+
 
   def sold_confirmation
     @order = Order.all
-    redirect_to root_path if @order.find_by(item_id: @item.id)
+    redirect_to root_path if @order.find_by(item_id: @item.id) || current_user == @item.user
   end
 end
